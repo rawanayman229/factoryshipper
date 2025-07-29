@@ -1,0 +1,141 @@
+.home-container {
+  padding: 20px;
+  direction: rtl;
+  font-family: 'Cairo', sans-serif;
+}
+
+.page-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.balance-card {
+  background: linear-gradient(to left, #2a6ef4, #377dff);
+  border-radius: 15px;
+  padding: 20px;
+  color: white;
+  margin-bottom: 30px;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.account-label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.wallet-icon {
+  font-size: 20px;
+}
+
+.sub-label {
+  font-size: 12px;
+  opacity: 0.9;
+  margin: 5px 0;
+}
+
+.amount {
+  font-size: 26px;
+  font-weight: bold;
+  margin: 10px 0;
+}
+
+.stats-row {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 10px;
+}
+
+.stat-item p {
+  font-size: 12px;
+  margin: 0;
+  opacity: 0.9;
+}
+
+.stat-item span {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.orders-summary {
+  background-color: #fff;
+}
+
+.orders-summary h4 {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.tabs {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.tab {
+  background-color: #f0f0f0;
+  padding: 5px 12px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+.tab.active {
+  background-color: #ddd;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 15px;
+}
+
+.summary-card {
+  background-color: #f8f9fa;
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  color: #333;
+  box-shadow: 0 0 6px rgba(0,0,0,0.05);
+}
+
+.summary-card .summary-icon {
+  font-size: 20px;
+  margin-bottom: 5px;
+}
+
+.summary-card .label {
+  font-size: 14px;
+  margin: 5px 0;
+}
+
+.summary-card .value {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.yellow {
+  background-color: #fff7e1;
+  color: #856404;
+}
+
+.green {
+  background-color: #e8f6ea;
+  color: #2e7d32;
+}
+
+.red {
+  background-color: #fdeaea;
+  color: #c62828;
+}
+
+.blue {
+  background-color: #e7f0fc;
+  color: #1565c0;
+}

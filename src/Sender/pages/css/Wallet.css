@@ -1,0 +1,60 @@
+.wallet-container {
+  padding: 24px;
+  direction: rtl;
+  font-family: 'Cairo', sans-serif;
+  background-color: #f7f9fa;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 28px;
+  margin-bottom: 24px;
+  text-align: right;
+  color: #222;
+  font-weight: 600;
+  border-right: 4px solid #00b894;
+  padding-right: 12px;
+}
+
+.wallet-cards {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+}
+
+.wallet-card {
+  background: linear-gradient(145deg, #ffffff, #e6ffee);
+  border: 1px solid #00b894;
+  padding: 24px;
+  flex: 1 1 220px;
+  border-radius: 16px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+}
+
+.wallet-card:hover {
+  background: #d9fff2;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 184, 148, 0.2);
+}
+
+.wallet-card .icon {
+  font-size: 34px;
+  color: #00b894;
+  margin-bottom: 12px;
+}
+
+.wallet-card .title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.wallet-card .amount {
+  font-size: 16px;
+  color: #555;
+}

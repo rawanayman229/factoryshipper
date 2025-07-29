@@ -1,0 +1,243 @@
+/* الأساسيات */
+.order-container {
+  direction: rtl;
+  font-family: 'Cairo', sans-serif;
+  padding: 30px;
+  background-color: #f9f9fb;
+  min-height: 100vh;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+/* الهيدر */
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  gap: 20px;
+}
+
+/* شريط البحث */
+.search-bar {
+  position: relative;
+  width: 300px;
+}
+
+.search-bar input {
+  width: 100%;
+  padding: 12px 15px 12px 40px;
+  border-radius: 30px;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 14px;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #888;
+}
+
+/* التبويبات */
+.order-tabs {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 30px;
+}
+
+.order-tabs button {
+  background-color: #e0e0e0;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 25px;
+  font-size: 14px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: 0.3s;
+}
+
+.order-tabs button.active {
+  background-color: #3498db;
+  color: #fff;
+}
+
+/* البطاقات */
+.order-actions {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+}
+
+.order-card {
+  flex: 1;
+  min-width: 250px;
+  background: #ffffff;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.order-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.1);
+}
+
+.order-card .icon {
+  font-size: 30px;
+  color: #3498db;
+  margin-bottom: 10px;
+}
+
+/* النماذج */
+.order-form {
+  background-color: #ffffff;
+  padding: 25px;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  margin-bottom: 40px;
+}
+
+.order-form h3 {
+  margin-bottom: 20px;
+  color: #2c3e50;
+}
+
+.form-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.form-group {
+  flex: 1;
+  min-width: 250px;
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 6px;
+  font-weight: 500;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  width: 100%;
+  padding: 10px 15px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 14px;
+  background: #fdfdfd;
+}
+
+.form-group textarea {
+  resize: vertical;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+.cancel-btn,
+.submit-btn {
+  padding: 10px 20px;
+  border-radius: 25px;
+  border: none;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 14px;
+}
+
+.cancel-btn {
+  background-color: #bdc3c7;
+  color: #fff;
+}
+
+.submit-btn {
+  background-color: #2ecc71;
+  color: #fff;
+}
+
+/* الجدول */
+.orders-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: #fff;
+  border-radius: 15px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+.orders-table th,
+.orders-table td {
+  padding: 15px;
+  text-align: center;
+  border-bottom: 1px solid #eee;
+}
+
+.orders-table th {
+  background-color: #ecf0f1;
+  font-weight: bold;
+}
+
+.status-badge {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 500;
+  display: inline-block;
+}
+
+.status-badge.completed {
+  background-color: #2ecc71;
+  color: white;
+}
+
+.status-badge.cancelled {
+  background-color: #e74c3c;
+  color: white;
+}
+
+.status-badge.processing {
+  background-color: #f1c40f;
+  color: white;
+}
+
+/* أزرار الإجراءات */
+.action-btn {
+  padding: 6px 12px;
+  margin: 2px;
+  border: none;
+  border-radius: 20px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.view-btn {
+  background-color: #2980b9;
+  color: white;
+}
+
+.print-btn {
+  background-color: #9b59b6;
+  color: white;
+}
