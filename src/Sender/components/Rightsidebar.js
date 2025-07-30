@@ -14,7 +14,7 @@ const Rightsidebar = () => {
       <div className='bottom'>
         <ul>
           <li>
-            <NavLink to="/" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
+            <NavLink to="/home" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
               الرئيسي <span className="icon-space"><FaHome className="icon" /></span>
             </NavLink>
           </li>

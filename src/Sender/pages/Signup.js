@@ -5,17 +5,17 @@ import { FaShippingFast } from 'react-icons/fa';
 const Signup = () => {
   return (
     <div className="register-container">
-  <div className="company-banner">
-  <div className="company-logo">
-    <FaShippingFast className="icon" />
-    <h1 className="company-name">Stake Express</h1>
-  </div>
-  <p className="slogan">Your trusted logistics partner for fast and reliable shipping</p>
-</div>
+      <div className="company-banner">
+        <div className="company-logo">
+          <FaShippingFast className="icon" />
+          <h1 className="company-name">Stake Express</h1>
+        </div>
+        <p className="slogan">
+          Your trusted logistics partner for fast and reliable shipping
+        </p>
+      </div>
 
-
-    
-      <div className="form-box"> 
+      <div className="form-box">
         <form>
           <h2>Create Your Account</h2>
           <p>Join thousands of satisfied customers who trust us with their shipping needs</p>
@@ -41,8 +41,8 @@ const Signup = () => {
 
           <div className="section">
             <h3>Shipping Information</h3>
-            <select>
-              <option disabled selected>Select the type of products you typically ship</option>
+            <select defaultValue="">
+              <option value="" disabled>Select the type of products you typically ship</option>
               <option>Electronics</option>
               <option>Clothing</option>
               <option>Furniture</option>
@@ -51,12 +51,12 @@ const Signup = () => {
 
           <button type="submit">Create Account & Start Shipping</button>
         </form>
-        <p className="login-link">Already have an account? <a href="/login">Login here</a></p>
+        <p className="login-link">
+          Already have an account? <a href="/login">Login here</a>
+        </p>
       </div>
     </div>
-  );
+  )
 }
-  
-
 
 export default Signup
