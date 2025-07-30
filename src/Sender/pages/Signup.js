@@ -1,11 +1,10 @@
 import React from 'react'
-import './css/Signup.css'
 import { FaShippingFast } from 'react-icons/fa';
+import './css/Signup.css'
 
 const Signup = () => {
-  return (
-    <div className="register-container">
-      <div className="company-banner">
+  return (<>
+        <div className="company-banner">
         <div className="company-logo">
           <FaShippingFast className="icon" />
           <h1 className="company-name">Stake Express</h1>
@@ -15,6 +14,8 @@ const Signup = () => {
         </p>
       </div>
 
+    <div className="Signup-container">
+  
       <div className="form-box">
         <form>
           <h2>Create Your Account</h2>
@@ -56,6 +57,7 @@ const Signup = () => {
         </p>
       </div>
     </div>
+    </>
   )
 }
 
