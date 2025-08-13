@@ -1,0 +1,262 @@
+body.login-page{
+  margin: 0;
+  padding: 0;
+  font-family: "Segoe UI", sans-serif;
+  background-image: url('../../../../public/slider-03-a.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh; 
+}
+
+.login-banner {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 12px;
+  padding: 10px 50px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+  margin-left: 43%;
+      width: 500px;
+
+}
+
+.login-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login-icon {
+  font-size: 36px;
+  color: #111122;
+}
+
+.login-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bold;
+  color: #111122;
+}
+
+.login-slogan {
+  font-size: 14px;
+  color: #555;
+  text-align: center;
+  margin-top: 5px;
+}
+
+.login-container {
+  position: relative;
+  top: -20px; 
+  left: 40%;
+  width: 100%;
+  max-width: 600px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+.login-form-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: auto;
+  padding: 0;
+  border-radius: 18px;
+
+  background: rgba(255, 255, 255, 0.15); /* ← شفافية */
+  backdrop-filter: blur(15px);           /* ← تمويه */
+  -webkit-backdrop-filter: blur(15px);   /* ← دعم Safari */
+
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+}
+
+
+
+form {
+  position: relative;
+  z-index: 1;
+  padding: 30px;
+  padding-bottom: 40px;
+}
+
+.login-form-title {
+  text-align: center;
+  margin-bottom: 10px;
+  font-size: 26px;
+  color: #111;
+}
+
+.login-form-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #444;
+  margin-bottom: 25px;
+}
+
+.login-input-group {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 20px;
+}
+
+.login-input-group input {
+  padding: 12px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.login-input-group input:focus {
+  border-color: #333;
+  outline: none;
+}
+
+.login-options {
+  display: flex;
+  justify-content: space-between;
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 15px;
+}
+
+.login-forgot-link {
+  color: #111122;
+  text-decoration: none;
+}
+
+.login-forgot-link:hover {
+  text-decoration: underline;
+}
+
+.login-submit-button {
+  width: 100%;
+  padding: 14px;
+  border: none;
+  background-color: #111122;
+  color: #fff;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.login-submit-button:hover {
+  background-color: #00001a;
+}
+
+.login-footer-text {
+  text-align: center;
+  margin-top: 20px;
+  font-size: 14px;
+  color: #444;
+  z-index: 2;
+}
+
+.login-footer-text a {
+  color: #111122;
+  font-weight: bold;
+  text-decoration: none;
+  margin-left: 5px;
+  transition: color 0.3s ease;
+}
+
+.login-footer-text a:hover {
+  color: #333;
+  text-decoration: underline;
+}
+@media (max-width: 768px) {
+  .login-banner {
+    margin-right: 0;
+    padding: 0 15px;
+    text-align: center;
+  }
+
+  .login-container {
+    margin-right: 0;
+    margin-top: 30px;
+    padding: 0 15px;
+    min-height: auto;
+  }
+
+  .login-form-wrapper {
+    max-width: 100%;
+    border-radius: 12px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  .login-form-title {
+    font-size: 22px;
+  }
+
+  .login-form-subtitle {
+    font-size: 13px;
+  }
+
+  .login-input-group input {
+    font-size: 13px;
+    padding: 10px;
+  }
+
+  .login-submit-button {
+    font-size: 15px;
+    padding: 12px;
+  }
+
+  .login-footer-text {
+    font-size: 13px;
+    margin-top: 15px;
+  }
+
+  .login-options {
+    flex-direction: column;
+    gap: 8px;
+    align-items: flex-start;
+  }
+
+  .login-options label,
+  .login-options a {
+    font-size: 13px;
+  }
+}
+@media (max-width: 480px) {
+  .login-form-title {
+    font-size: 20px;
+  }
+
+  .login-submit-button {
+    font-size: 14px;
+    padding: 10px;
+  }
+
+  .login-footer-text {
+    font-size: 12px;
+  }
+
+  .login-icon {
+    font-size: 30px;
+  }
+
+  .login-title {
+    font-size: 20px;
+  }
+
+  .login-slogan {
+    font-size: 13px;
+  }
+}

@@ -1,233 +1,163 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './css/Order.css';
-import { FaTruck, FaUndo, FaFileInvoice, FaSearch, FaBoxes, FaHistory } from 'react-icons/fa';
-import { useLocation } from 'react-router-dom';
-import { QRCodeCanvas } from 'qrcode.react';
 
-import { toast, ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+const fallbackOrders = [
+  {
+    id: 842,
+    status: 'تم التوصيل',
+    type: 'سريع',
+    name: 'أحمد محمد',
+    phone: '0551234567',
+    address: 'الرياض، حي الزهري',
+    date: '2024-01-15',
+    time: '14:30',
+    price: 45,
+  },
+  {
+    id: 841,
+    status: 'منتج للعميل',
+    type: 'عادي',
+    name: 'فاطمة علي',
+    phone: '0559876543',
+    address: 'جدة، حي الأزهراء',
+    date: '2024-01-15',
+    time: '12:15',
+    price: 35,
+  },
+  {
+    id: 840,
+    status: 'قيد التنفيذ',
+    type: 'سريع',
+    name: 'محمد سالم',
+    phone: '0551112233',
+    address: 'الدمام، حي الفيصلية',
+    date: '2024-01-15',
+    time: '10:45',
+    price: 25,
+  },
+  {
+    id: 839,
+    status: 'انتظار القرار',
+    type: 'عادي',
+    name: 'نورا أحمد',
+    phone: '0554445556',
+    address: 'مكة، حي العزيزية',
+    date: '2024-01-14',
+    time: '16:20',
+    price: 50,
+  },
+];
+
+const tabs = ['الكل', 'تم التوصيل', 'منتج للعميل', 'قيد التنفيذ', 'انتظار القرار'];
 
 const Order = () => {
-  const location = useLocation();
-  const queryParams = new URLSearchParams(location.search);
-  const typeFromQuery = queryParams.get("type"); 
+  const [orders, setOrders] = useState([]);
+  const [activeTab, setActiveTab] = useState('الكل');
+  const [searchTerm, setSearchTerm] = useState('');
+  const [openMenuId, setOpenMenuId] = useState(null); 
+  useEffect(() => {
+    const fetchOrders = async () => {
+      try {
+        const res = await fetch('https://your-api-link.com/api/orders');
+        if (!res.ok) throw new Error('Request failed');
+        const data = await res.json();
+        setOrders(data);
+      } catch (error) {
+        console.warn('Using fallback orders due to error:', error.message);
+        setOrders(fallbackOrders);
+      }
+    };
 
-  const [activeForm, setActiveForm] = useState(typeFromQuery || 'invoice');
-  const [activeTab, setActiveTab] = useState('new');
-  const [searchQuery, setSearchQuery] = useState('');
-  const [trackingId, setTrackingId] = useState('');
+    fetchOrders();
+  }, []);
 
+  const filteredOrders = orders.filter((order) => {
+    const matchesTab = activeTab === 'الكل' || order.status === activeTab;
+    const matchesSearch =
+      order.name.includes(searchTerm) ||
+      order.phone.includes(searchTerm) ||
+      order.id.toString().includes(searchTerm);
 
+    return matchesTab && matchesSearch;
+  });
 
-  const [orders, setOrders] = useState([
-    { id: 'ORD-2023-001', type: 'شحن', status: 'قيد المعالجة', date: '2023-05-15', customer: 'محمد أحمد' },
-    { id: 'ORD-2023-002', type: 'إرجاع', status: 'مكتمل', date: '2023-05-10', customer: 'علي محمود' },
-    { id: 'ORD-2023-003', type: 'فاتورة', status: 'ملغى', date: '2023-05-05', customer: 'سارة خالد' },
-  ]);
-const filteredOrders = orders.filter(order =>
-  order.id.includes(searchQuery) || order.customer.includes(searchQuery)
-);
-  const handleSubmit = (e) => {
-    e.preventDefault();
-   const generatedId = 'ORD-' + Math.floor(Math.random() * 1000000);
-setTrackingId(generatedId);
-toast.success(`تم إنشاء البوليصة برقم: ${generatedId}`);
-
-
+  const handleMenuToggle = (id) => {
+    setOpenMenuId(openMenuId === id ? null : id);
   };
 
   return (
-    <div className="order-container">
-    <ToastContainer position="top-center" />
+    <div className="order-page">
       <div className="order-header">
-        <h2 className="page-title">طلبات المرسل</h2>
-
-        <div className="search-bar">
-          <input 
-            type="text" 
-            placeholder="ابحث عن طلب أو بوليصة..." 
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-          <FaSearch className="search-icon" />
-        </div>
+        <h2>الطلبات</h2>
+        <input
+          type="text"
+          placeholder="ابحث برقم الطلب أو اسم العميل..."
+          className="order-search"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
       </div>
 
       <div className="order-tabs">
-        <button 
-          className={activeTab === 'new' ? 'active' : ''} 
-          onClick={() => setActiveTab('new')}
-        >
-          <FaBoxes /> إنشاء طلب
-        </button>
-        <button 
-          className={activeTab === 'history' ? 'active' : ''} 
-          onClick={() => setActiveTab('history')}
-        >
-          <FaHistory /> سجل الطلبات
-        </button>
+        {tabs.map((tab) => (
+          <button
+            key={tab}
+            className={`tab ${activeTab === tab ? 'active' : ''}`}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab} (
+              {
+                orders.filter((o) =>
+                  tab === 'الكل' ? true : o.status === tab
+                ).length
+              }
+            )
+          </button>
+        ))}
       </div>
 
-      {activeTab === 'new' ? (
-        <>
-          <div className="order-actions">
-            <div className="order-card" onClick={() => setActiveForm('invoice')}>
-              <FaFileInvoice className="icon" />
-              <span>بوليصة شحن</span>
-              <p>إصدار بوليصة شحن</p>
+      <div className="order-list">
+        {filteredOrders.length > 0 ? (
+          filteredOrders.map((order) => (
+            <div key={order.id} className="order-card">
+              <div className="order-card-header">
+                <span className="order-id">#{order.id}</span>
+                <span className={`status-badge ${order.status}`}>{order.status}</span>
+                <span className={`type-badge ${order.type}`}>{order.type}</span>
+              </div>
+              <div className="order-info">
+                <p>العميل: {order.name}</p>
+                <p>الهاتف: {order.phone}</p>
+                <p>العنوان: {order.address}</p>
+                <p>التاريخ: {order.date} - {order.time}</p>
+              </div>
+              <div className="order-footer">
+                <span className="order-price">{order.price} ر.س</span>
+                
+                <div className="order-options">
+                  <span 
+                    className="options-btn"
+                    onClick={() => handleMenuToggle(order.id)}
+                  >
+                    ⋮
+                  </span>
+                  {openMenuId === order.id && (
+                    <div className="options-menu">
+                      <button>تأجيل الأوردر</button>
+                      <button>إعادة توصيل الأوردر</button>
+                      <button>تعديل البيانات</button>
+                      <button>طباعة بوليسة</button>
+                      <button className="danger">إلغاء</button>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
-
-            <div className="order-card" onClick={() => setActiveForm('shipping')}>
-              <FaTruck className="icon" />
-              <span>طلب إرسال</span>
-              <p>جدولة إرسال شحنة</p>
-            </div>
-
-            <div className="order-card" onClick={() => setActiveForm('return')}>
-              <FaUndo className="icon" />
-              <span>طلب استرجاع</span>
-              <p>معالجة شحنة راجعة</p>
-            </div>
-          </div>
-
-          {activeForm === 'invoice' && (
-            <form className="order-form" onSubmit={handleSubmit}>
-              <h3>إنشاء بوليصة شحن</h3>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>اسم المستلم</label>
-                  <input type="text" placeholder="ادخل اسم المستلم" required />
-                </div>
-                <div className="form-group">
-                  <label>رقم الهاتف</label>
-                  <input type="tel" placeholder="ادخل رقم الهاتف" required />
-                </div>
-              </div>
-              <div className="form-group">
-                <label>العنوان</label>
-                <input type="text" placeholder="العنوان الكامل" required />
-              </div>
-              <div className="form-row">
-                <div className="form-group">
-                  <label>المدينة</label>
-                  <select required>
-                    <option value="">اختر المدينة</option>
-                    <option value="riyadh">الرياض</option>
-                    <option value="jeddah">جدة</option>
-                    <option value="dammam">الدمام</option>
-                  </select>
-                </div>
-                <div className="form-group">
-                  <label>قيمة الشحنة</label>
-                  <input type="number" placeholder="ريال سعودي" required />
-                </div>
-              </div>
-              <div className="form-group">
-                <label>وصف المحتويات</label>
-                <textarea placeholder="مثال: ملابس، كتب..." rows="3"></textarea>
-              </div>
-              <div className="form-actions">
-                <button type="button" className="cancel-btn">إلغاء</button>
-                <button type="submit" className="submit-btn">إنشاء</button>
-              </div>
-            </form>
-          )}
-{activeForm === 'invoice' && trackingId && (
-  <div className="qr-preview" style={{ marginTop: '20px', textAlign: 'center' }}>
-    <h4>رمز QR الخاص بالبوليصة</h4>
-    <QRCodeCanvas value={trackingId} size={180} />
-    <div className="qr-text" style={{ marginTop: '10px', fontWeight: 'bold' }}>
-      {trackingId}
-    </div>
-  </div>
-)}
-
-          {activeForm === 'shipping' && (
-            <form className="order-form" onSubmit={handleSubmit}>
-              <h3>إنشاء طلب إرسال</h3>
-              <div className="form-group">
-                <label>رقم البوليصة</label>
-                <input type="text" placeholder="أدخل رقم البوليصة" required />
-              </div>
-              <div className="form-group">
-                <label>تاريخ الإرسال المطلوب</label>
-                <input type="date" required />
-              </div>
-              <div className="form-group">
-                <label>ملاحظات إضافية</label>
-                <textarea placeholder="أدخل أي تفاصيل إضافية"></textarea>
-              </div>
-              <div className="form-actions">
-                <button type="button" className="cancel-btn">إلغاء</button>
-                <button type="submit" className="submit-btn">إرسال الطلب</button>
-              </div>
-            </form>
-          )}
-
-          {activeForm === 'return' && (
-            <form className="order-form" onSubmit={handleSubmit}>
-              <h3>إنشاء طلب استرجاع</h3>
-              <div className="form-group">
-                <label>رقم الطلب أو البوليصة</label>
-                <input type="text" placeholder="أدخل رقم البوليصة أو الطلب" required />
-              </div>
-              <div className="form-group">
-                <label>سبب الاسترجاع</label>
-                <select required>
-                  <option value="">اختر السبب</option>
-                  <option value="رفض من العميل">رفض من العميل</option>
-                  <option value="بيانات خاطئة">بيانات خاطئة</option>
-                  <option value="تالف">المنتج تالف</option>
-                  <option value="أخرى">أخرى</option>
-                </select>
-              </div>
-              <div className="form-group">
-                <label>تفاصيل إضافية</label>
-                <textarea placeholder="اكتب مزيداً من التفاصيل (اختياري)"></textarea>
-              </div>
-              <div className="form-actions">
-                <button type="button" className="cancel-btn">إلغاء</button>
-                <button type="submit" className="submit-btn">إرسال الطلب</button>
-              </div>
-            </form>
-          )}
-        </>
-      ) : (
-        <div className="orders-table">
-          <table>
-            <thead>
-              <tr>
-                <th>رقم الطلب</th>
-                <th>النوع</th>
-                <th>الحالة</th>
-                <th>التاريخ</th>
-                <th>العميل</th>
-                <th>خيارات</th>
-              </tr>
-            </thead>
-            <tbody>
-{filteredOrders.map(order => (
-
-                <tr key={order.id}>
-                  <td>{order.id}</td>
-                  <td>{order.type}</td>
-                  <td>
-                    <span className={`status-badge ${
-                      order.status === 'مكتمل' ? 'completed' :
-                      order.status === 'ملغى' ? 'cancelled' : 'processing'}`}>{order.status}</span>
-                  </td>
-                  <td>{order.date}</td>
-                  <td>{order.customer}</td>
-                  <td>
-                    <button className="action-btn view-btn">عرض</button>
-                    <button className="action-btn print-btn">طباعة</button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+          ))
+        ) : (
+          <p style={{ textAlign: 'center', marginTop: '30px', color: '#888' }}>لا توجد طلبات مطابقة</p>
+        )}
+      </div>
     </div>
   );
 };

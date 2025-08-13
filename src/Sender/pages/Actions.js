@@ -1,177 +1,184 @@
-import React, { useState } from 'react';
-import './css/Actions.css';
-import {
-  FaFileAlt, FaTruck, FaEdit, FaUndo, FaQrcode,
-  FaMoneyBillWave, FaBell, FaStar
-} from 'react-icons/fa';
-import { QRCodeCanvas } from 'qrcode.react';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from "react";
+import "./css/Actions.css";
+import { FaFilter } from "react-icons/fa";
 
+const fallbackData = [
+  {
+    id: "T-001",
+    sender: "منجر الأزياء العصرية",
+    orders: 12,
+    date: "2024-01-15",
+    time: "14:00",
+    address: "الرياض، حي النرجس، شارع الملك فهد",
+    phone: "0551234567",
+    delegate: "محمد العلي",
+    status: "قيد التنفيذ",
+    statusColor: "blue",
+  },
+  {
+    id: "T-002",
+    sender: "مؤسسة الإلكترونيات المتقدمة",
+    orders: 8,
+    date: "2024-01-15",
+    time: "16:30",
+    address: "جدة، حي الزهراء، طريق الأمير سلطان",
+    phone: "0559876543",
+    delegate: "خالد السالم",
+    status: "بانتظار الاستلام",
+    statusColor: "yellow",
+  },
+  {
+    id: "T-003",
+    sender: "شركة المواد الغذائية الطبيعية",
+    orders: 25,
+    date: "2024-01-15",
+    time: "10:00",
+    address: "الدمام، حي القيمصيلة، شارع الخليج",
+    phone: "0551112233",
+    delegate: "عبدالله أحمد",
+    status: "تم التنفيذ",
+    statusColor: "green",
+  },
+  {
+    id: "T-004",
+    sender: "معرض الأثاث الحديث",
+    orders: 3,
+    date: "2024-01-16",
+    time: "09:45",
+    address: "مكة، حي العزيزية، طريق الحرم",
+    phone: "0554445555",
+    delegate: "غير محدد",
+    status: "مجدولة",
+    statusColor: "purple",
+  },
+  {
+    id: "T-005",
+    sender: "مكتبة الرواد التعليمية",
+    orders: 15,
+    date: "2024-01-14",
+    time: "15:30",
+    address: "المدينة، حي العوالي، شارع النور",
+    phone: "0557778889",
+    delegate: "محمد العلي",
+    status: "ملغية",
+    statusColor: "red",
+  },
+  {
+    id: "T-006",
+    sender: "صيدلية النور الطبية",
+    orders: 7,
+    date: "2024-01-15",
+    time: "11:45",
+    address: "الطائف، حي الوسام، شارع الملك عبدالعزيز",
+    phone: "0552233445",
+    delegate: "سعد الأحمد",
+    status: "قيد التنفيذ",
+    statusColor: "blue",
+  },
+];
 
-<QRCodeCanvas value="https://example.com" />
-
+const API_URL = "https://example.com/api/tasks"; 
 const Actions = () => {
-  const [activeAction, setActiveAction] = useState(null);
-  const [qrValue, setQrValue] = useState('');
+  const [data, setData] = useState([]);
 
-  const handleCreateShipment = (e) => {
-    e.preventDefault();
-    const trackingId = 'ORD-' + Math.floor(Math.random() * 1000000);
-    setQrValue(trackingId);
-   toast.success(`تم إنشاء البوليصة برقم: ${trackingId}`, {
-  position: 'top-center',
-  autoClose: 4000,
-  hideProgressBar: false,
-  closeOnClick: true,
-  pauseOnHover: true,
-  draggable: true,
-  progress: undefined,
-  theme: 'colored',
-});
+  useEffect(() => {
+    const fetchTasks = async () => {
+      try {
+        const res = await fetch(API_URL);
+        if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
+        const tasks = await res.json();
 
-    setActiveAction('qrcode');
-  };
+        if (!Array.isArray(tasks) || tasks.length === 0) {
+          setData(fallbackData);
+        } else {
+          setData(tasks);
+        }
+      } catch (error) {
+        console.warn("API Error:", error.message, "— Using fallback data.");
+        setData(fallbackData);
+      }
+    };
+
+    fetchTasks();
+  }, []);
 
   return (
     <div className="actions-container">
-    <ToastContainer position="top-center" />
-
-      <h2 className="page-title">مهام المرسل</h2>
-
-      <div className="action-list">
-        <div className="action-item" onClick={() => setActiveAction('create')}>
-          <FaFileAlt className="icon" />
-          <span>إنشاء بوليصة جديدة</span>
-        </div>
-
-        <div className="action-item" onClick={() => setActiveAction('track')}>
-          <FaTruck className="icon" />
-          <span>تتبع شحناتي</span>
-        </div>
-
-        <div className="action-item" onClick={() => setActiveAction('edit')}>
-          <FaEdit className="icon" />
-          <span>تعديل بيانات الشحنة</span>
-        </div>
-
-        <div className="action-item" onClick={() => setActiveAction('resend')}>
-          <FaUndo className="icon" />
-          <span>طلب استرجاع / إعادة إرسال</span>
-        </div>
-
-        <div className="action-item" onClick={() => setActiveAction('qrcode')}>
-          <FaQrcode className="icon" />
-          <span>طباعة QR للبوليصة</span>
-        </div>
-
-        <div className="action-item" onClick={() => setActiveAction('wallet')}>
-          <FaMoneyBillWave className="icon" />
-          <span>دفع رسوم الشحن</span>
-        </div>
-
-        <div className="action-item" onClick={() => setActiveAction('notify')}>
-          <FaBell className="icon" />
-          <span>إشعار العميل</span>
-        </div>
-
-        <div className="action-item" onClick={() => setActiveAction('rate')}>
-          <FaStar className="icon" />
-          <span>تقييم الخدمة</span>
-        </div>
+      <div className="header-actions">
+        <button className="new-request">طلب استلام جديد</button>
       </div>
 
-      <div className="action-content">
-        {activeAction === 'create' && (
-          <form className="action-form" onSubmit={handleCreateShipment}>
-            <h3>إنشاء بوليصة شحن جديدة</h3>
-            <input type="text" placeholder="اسم المستلم" required />
-            <input type="text" placeholder="عنوان المستلم" required />
-            <input type="text" placeholder="رقم الهاتف" required />
-            <textarea placeholder="تفاصيل الشحنة"></textarea>
-            <button type="submit">إنشاء البوليصة</button>
-          </form>
-        )}
-
-        {activeAction === 'track' && (
-          <form className="action-form">
-            <h3>تتبع شحنة</h3>
-            <input type="text" placeholder="رقم البوليصة أو الطلب" />
-            <button type="submit">تتبع الآن</button>
-          </form>
-        )}
-
-        {activeAction === 'edit' && (
-          <form className="action-form">
-            <h3>تعديل بيانات الشحنة</h3>
-            <input type="text" placeholder="رقم البوليصة" />
-            <input type="text" placeholder="العنوان الجديد" />
-            <button type="submit">حفظ التعديلات</button>
-          </form>
-        )}
-
-        {activeAction === 'resend' && (
-          <form className="action-form">
-            <h3>طلب استرجاع / إعادة إرسال</h3>
-            <input type="text" placeholder="رقم الطلب" />
-            <select>
-              <option>إعادة إرسال</option>
-              <option>طلب استرجاع</option>
-            </select>
-            <textarea placeholder="سبب الطلب"></textarea>
-            <button type="submit">إرسال الطلب</button>
-          </form>
-        )}
-
-        {activeAction === 'qrcode' && (
-          <div className="qrcode-box">
-            <h3>رمز QR للبوليصة</h3>
-            {qrValue ? (
-              <>
-                <QRCodeCanvas  value={qrValue} size={180} />
-                <div className="qr-text" style={{ marginTop: '10px', fontWeight: 'bold' }}>
-                  {qrValue}
-                </div>
-              </>
-            ) : (
-              <p>لم يتم توليد رمز بعد. أنشئ بوليصة أولاً.</p>
-            )}
-          </div>
-        )}
-
-        {activeAction === 'wallet' && (
-          <form className="action-form">
-            <h3>دفع رسوم الشحن</h3>
-            <input type="text" placeholder="رقم البوليصة" />
-            <input type="number" placeholder="المبلغ المطلوب" />
-            <button type="submit">دفع الآن</button>
-          </form>
-        )}
-
-        {activeAction === 'notify' && (
-          <form className="action-form">
-            <h3>إرسال إشعار للعميل</h3>
-            <input type="text" placeholder="رقم الهاتف أو البوليصة" />
-            <textarea placeholder="محتوى الإشعار"></textarea>
-            <button type="submit">إرسال الإشعار</button>
-          </form>
-        )}
-
-        {activeAction === 'rate' && (
-          <form className="action-form">
-            <h3>تقييم الخدمة</h3>
-            <select>
-              <option value="">اختر تقييمك</option>
-              <option>⭐️⭐️⭐️⭐️⭐️ ممتاز</option>
-              <option>⭐️⭐️⭐️⭐ جيد</option>
-              <option>⭐️⭐️⭐ متوسط</option>
-              <option>⭐️⭐ ضعيف</option>
-            </select>
-            <textarea placeholder="ملاحظات إضافية (اختياري)"></textarea>
-            <button type="submit">إرسال التقييم</button>
-          </form>
-        )}
+      <div className="filter-search">
+        <button className="filter-btn">
+          <FaFilter /> فلترة متقدمة
+        </button>
+        <input
+          type="text"
+          placeholder="البحث برقم المهمة، اسم المرسل، رقم الهاتف أو العنوان..."
+        />
       </div>
+
+      <div className="tabs">
+        <span>اليوم (0)</span>
+        <span>الأسبوع (0)</span>
+        <span className="active">الكل ({data.length})</span>
+      </div>
+
+      <table className="tasks-table">
+        <thead>
+          <tr>
+            <th>رقم المهمة</th>
+            <th>اسم المرسل</th>
+            <th>عدد الطلبات</th>
+            <th>تاريخ ووقت الاستلام</th>
+            <th>عنوان الاستلام</th>
+            <th>رقم الهاتف</th>
+            <th>اسم المندوب</th>
+            <th>حالة المهمة</th>
+            <th>الإجراءات</th>
+          </tr>
+        </thead>
+        <tbody>
+          {data.map((task) => (
+            <tr key={task.id}>
+              <td className="task-id">{task.id}</td>
+              <td>{task.sender}</td>
+              <td>
+                <span className="orders-count">{task.orders}</span>
+              </td>
+              <td>
+                <div>{task.date}</div>
+                <div>{task.time}</div>
+              </td>
+              <td>{task.address}</td>
+              <td>{task.phone}</td>
+              <td
+                className={
+                  task.delegate === "غير محدد" ? "no-delegate" : "delegate"
+                }
+              >
+                {task.delegate}
+              </td>
+              <td>
+                <span className={`status ${task.statusColor}`}>
+                  {task.status}
+                </span>
+              </td>
+              <td className="actions-btns">
+                <button className="cancel">
+                  <i className="fas fa-times"></i> إلغاء
+                </button>
+                <button className="edit">
+                  <i className="fas fa-edit"></i> تعديل الموعد
+                </button>
+                <button className="details">
+                  <i className="fas fa-eye"></i> تفاصيل
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };

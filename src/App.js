@@ -6,8 +6,12 @@ import Actions from './Sender/pages/Actions';
 import Wallet from './Sender/pages/Wallet';
 import Home from './Sender/pages/Home';
 import TopBar from './Sender/components/Topbar';
-import Signup from './Sender/pages/Signup';
-import Login from './Sender/pages/Login';
+import Signup from './Sender/auth/pages/Signup' ; 
+import Login from './Sender/auth/pages/Login'
+
+
+
+
 
 const Layout = () => {
   const location = useLocation();

@@ -15,22 +15,26 @@ const Rightsidebar = () => {
         <ul>
           <li>
             <NavLink to="/home" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-              الرئيسي <span className="icon-space"><FaHome className="icon" /></span>
+              <span className="icon"><FaHome /></span>
+              <span className="text">الرئيسية</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/order" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-              الطلبات <span className="icon-space"><FaShoppingCart className="icon" /></span>
+              <span className="icon"><FaShoppingCart /></span>
+              <span className="text">الطلبات</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/actions" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-              المهام <span className="icon-space"><FaTasks className="icon" /></span>
+              <span className="icon  icon2"><FaTasks /></span>
+              <span className="text">المهام</span>
             </NavLink>
           </li>
           <li>
             <NavLink to="/wallet" className={({ isActive }) => isActive ? "nav-link active" : "nav-link"}>
-              المحفظة <span className="icon-space"><FaWallet className="icon" /></span>
+              <span className="icon  icon3"><FaWallet /></span>
+              <span className="text">المحفظة</span>
             </NavLink>
           </li>
         </ul>
