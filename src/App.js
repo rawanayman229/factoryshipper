@@ -36,7 +36,6 @@ const isAuthPage = location.pathname === '/' || location.pathname === '/signup' 
           <Route path="/shipment-update" element={<ShipmentUpdate />} />
           <Route path="/hanger" element={<HangerLayout />}>
           <Route index element={<ShipmentUpdate />} />
-          <Route path="shipment-update" element={<ShipmentUpdate />} />
 
         </Route>
         </Routes>
